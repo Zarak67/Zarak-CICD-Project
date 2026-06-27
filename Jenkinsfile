@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    }
     stages {
         stage('Checkout') {
             steps {
@@ -11,17 +8,19 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t Zarak67/zarak-cicd-project:latest .'
+                bat 'docker build -t zarak67/zarak-cicd-project:latest .'
             }
         }
         stage('Login to Docker Hub') {
             steps {
-                bat 'echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    bat 'echo %DOCKER_PASS%| docker login -u %DOCKER_USER% --password-stdin'
+                }
             }
         }
         stage('Push Docker Image') {
             steps {
-                bat 'docker push Zarak67/zarak-cicd-project:latest'
+                bat 'docker push zarak67/zarak-cicd-project:latest'
             }
         }
         stage('Deploy') {
