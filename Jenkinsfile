@@ -8,21 +8,27 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building Zarak CICD Project'
+                bat 'docker build -t Zarak67/zarak-cicd-project:latest .'
             }
         }
 
-        stage('Test') {
+        stage('Login to Docker Hub') {
             steps {
-                echo 'Running tests'
+                bat 'docker login -u Zarak67 -p zarakbaloch@142657'
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                bat 'docker push Zarak67/zarak-cicd-project:latest'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy stage completed'
+                echo 'Deployment stage completed'
             }
         }
     }
