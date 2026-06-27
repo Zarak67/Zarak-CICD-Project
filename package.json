@@ -1,0 +1,10 @@
+{
+  "name": "zarak-cicd-project",
+  "version": "1.0.0",
+  "description": "simple node project for jenkins cicd",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo test passed"
+  }
+}
