@@ -5,3 +5,4 @@ Testing secure docker login - attempt 3
 Test 4
 TEST 5
 test 6
+test 7
